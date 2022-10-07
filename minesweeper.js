@@ -856,7 +856,7 @@ function endPopUp(outcome) {
     btnWrapper.appendChild(restartBtn);
     btnWrapper.appendChild(mainBtn);
     
-    if (settings.language.value === '한글') {
+    if (settings.language.value === 'kr') {
         if (outcome === 'win') {
             outcomeH2.innerText = '승리';
         } else {
