@@ -5,16 +5,44 @@ const fieldLen = {
 }
 const defaultSettings = {
     "solvable": {
-        "name": "풀 수 있는 퍼즐 생성",
+        "name": {
+            "kr": "풀 수 있는 퍼즐 생성",
+            "en": "Solvable Puzzle",
+            },
         "value": true,
-        "description": "찍기 없이 풀 수 있는 퍼즐을 생성합니다.",
+        "description": {
+            "kr": "찍기 없이 풀 수 있는 퍼즐을 생성합니다.",
+            "en": "Make puzzle solvable without luck",
+            },
         "type": "checkbox",
     },
     "life": {
-        "name": "생명",
+        "name": {
+            "kr": "생명",
+            "en": "Life",
+            },
         "value": 1,
-        "description": "지뢰를 밟을 때마다 1씩 깎이며, 0이 되면 패배합니다.",
+        "description": {
+            "kr": "지뢰를 밟을 때마다 1씩 깎이며, 0이 되면 패배합니다.",
+            "en": "Every time step on a mine, life is cut by one, and you lose when life reach zero.",
+            },
         "type": "number",
+    },
+    "language": {
+        "name": {
+            "kr": "언어",
+            "en": "Language",
+            },
+        "value": "kr",
+        "description": {
+            "kr": "언어를 선택합니다.",
+            "en": "Select a language.",
+            },
+        "type": "select",
+        "dataList": {
+            "kr": ["한글", "영어"],
+            "en": ["Korean", "English"],
+            },
     },
 }
 let settings = JSON.parse(JSON.stringify(defaultSettings));
@@ -45,9 +73,18 @@ function main() {
     const div = document.createElement('div');
     div.id = "MainPage";
     document.body.appendChild(div);
-    const easyBtn = createStartBtn("작음");
-    const normalBtn = createStartBtn("중간");
-    const hardBtn = createStartBtn("큼");
+    let easyBtn;
+    let normalBtn;
+    let hardBtn;
+    if (settings.language.value === "kr") {
+        easyBtn = createStartBtn("작음");
+        normalBtn = createStartBtn("중간");
+        hardBtn = createStartBtn("큼");
+    } else {
+        easyBtn = createStartBtn("Small");
+        normalBtn = createStartBtn("Medium");
+        hardBtn = createStartBtn("Large");
+    }
     const customBtn = createStartBtn();
     const settingsBtn = createSettingBtn();
     div.appendChild(easyBtn);
@@ -61,7 +98,11 @@ function createStartBtn(difficulty) {
     const startBtn = document.createElement('div');
     startBtn.id = "StartBtn";
     startBtn.className = 'Btn';
-    startBtn.innerText = "자유 크기";
+    if (settings.language.value === "kr") {
+        startBtn.innerText = "자유 크기";
+    } else {
+        startBtn.innerText = "Custom Size";
+    }
     startBtn.addEventListener('click', startGame);
     if (difficulty) {
         startBtn.id = `${difficulty}Btn`;
@@ -94,15 +135,15 @@ function startGame(e) {
     reveilQueue = [];
     mines = [];
     const difficulty = e.target.innerText;
-    if (difficulty === "작음") {
+    if (difficulty === "작음" || difficulty === "Small") {
         fieldLen.x = 10;
         fieldLen.y = 10;
         fieldLen.mine = 10;
-    } else if (difficulty === "중간") {
+    } else if (difficulty === "중간" || difficulty === "Medium") {
         fieldLen.x = 15;
         fieldLen.y = 15;
         fieldLen.mine = 25;
-    } else if (difficulty === "큼") {
+    } else if (difficulty === "큼" || difficulty === "Large") {
         fieldLen.x = 20;
         fieldLen.y = 20;
         fieldLen.mine = 50;
@@ -117,7 +158,6 @@ function startGame(e) {
 function getCustomInput() {
     const inputPopUp = makePopUp();
     const inputH2 = document.createElement('h2');
-    inputH2.innerText = "크기 입력";
     inputPopUp.appendChild(inputH2);
     const inputTable = document.createElement("table");
     inputTable.id = 'InputTable';
@@ -127,7 +167,13 @@ function getCustomInput() {
     const startBtn = document.createElement('span');
     startBtn.id = "StartBtn";
     startBtn.className = 'Btn';
-    startBtn.innerText = "시작";
+    if (settings.language.value === "kr") {
+        inputH2.innerText = "크기 입력";
+        startBtn.innerText = "시작";
+    } else {
+        inputH2.innerText = "Input Size";
+        startBtn.innerText = "Start";
+    }
     startBtn.addEventListener("click", handleInput);
     inputTable.appendChild(widthTr);
     inputTable.appendChild(heightTr);
@@ -146,7 +192,11 @@ function handleInput() {
     if (inputWidth.value === '' || inputHeight.value === '' || inputCount.value === '') {
         const alertSpan = document.createElement('span');
         alertSpan.className = 'Alert';
-        alertSpan.innerText = "값을 입력해주세요.";
+        if (settings.language.value === "kr") {
+            alertSpan.innerText = "값을 입력해주세요.";
+        } else {
+            alertSpan.innerText = "Insert a value.";
+        }
         inputPopUp.appendChild(alertSpan);
         return;
     }
@@ -159,19 +209,31 @@ function handleInput() {
     if (row < 5 || col < 5) {
         const alertSpan = document.createElement('span');
         alertSpan.className = 'Alert';
-        alertSpan.innerText = "가로와 세로는 5 이상이어야 합니다.";
+        if (settings.language.value === "kr") {
+            alertSpan.innerText = "가로와 세로는 5 이상이어야 합니다.";
+        } else {
+            alertSpan.innerText = "Horizontal and vertical must be at least 5.";
+        }
         inputPopUp.appendChild(alertSpan);
         return;
     } else if (count < 1) {
         const alertSpan = document.createElement('span');
         alertSpan.className = 'Alert';
-        alertSpan.innerText = "자연수를 입력하세요.";
+        if (settings.language.value === "kr") {
+            alertSpan.innerText = "자연수를 입력하세요.";
+        } else {
+            alertSpan.innerText = "Insert a natural value.";
+        }
         inputPopUp.appendChild(alertSpan);
         return;
     } else if (row * col <= count) {
         const alertSpan = document.createElement('span');
         alertSpan.className = 'Alert';
-        alertSpan.innerText = "지뢰의 개수는 가로와 세로의 곱보다 작아야 합니다.";
+        if (settings.language.value === "kr") {
+            alertSpan.innerText = "지뢰의 개수는 가로와 세로의 곱보다 적아야 합니다.";
+        } else {
+            alertSpan.innerText = "The number of mines must be less than the product of width and length.";
+        }
         inputPopUp.appendChild(alertSpan);
         return;
     }
@@ -187,12 +249,22 @@ function makeCustomInput(type) {
     const tr = document.createElement('tr');
     const td = document.createElement('td');
     const span = document.createElement('span');
-    if (type === 'Width') {
-        span.innerText = '가로 칸 수';
-    } else if (type === 'Height') {
-        span.innerText = '세로 칸 수';
-    } else if (type === 'Count') {
-        span.innerText = '지뢰 개수';
+    if (settings.language.value === "kr") {
+        if (type === 'Width') {
+            span.innerText = '가로 칸 수';
+        } else if (type === 'Height') {
+            span.innerText = '세로 칸 수';
+        } else if (type === 'Count') {
+            span.innerText = '지뢰 개수';
+        }
+    } else {
+        if (type === 'Width') {
+            span.innerText = 'Width Cells';
+        } else if (type === 'Height') {
+            span.innerText = 'Height Cells';
+        } else if (type === 'Count') {
+            span.innerText = 'Mine Count';
+        }
     }
     td.appendChild(span);
     const td2 = document.createElement('td');
@@ -256,11 +328,16 @@ function displayField() {
     const mainBtn = document.createElement('div');
     mainBtn.id = 'MainBtn';
     mainBtn.className = 'Btn';
-    mainBtn.innerText = '메인 메뉴';
     mainBtn.addEventListener('click', stop);
     const cm = document.createElement('div');
     cm.className = 'cm';
-    cm.innerText = '메인 메뉴';
+    if (settings.language.value === "kr") {
+        mainBtn.innerText = '메인 메뉴';
+        cm.innerText = '메인 메뉴';
+    } else {
+        mainBtn.innerText = 'Main Menu';
+        cm.innerText = 'Main Menu';
+    }
     upperBar.appendChild(cm);
     upperBar.appendChild(timeSpan);
     upperBar.appendChild(mainBtn);
@@ -716,15 +793,9 @@ function endPopUp(outcome) {
 
     const outcomeH2 = document.createElement('h2');
     outcomeH2.id = 'OutcomeSpan';
-    if (outcome === 'win') {
-        outcomeH2.innerText = '승리';
-    } else {
-        outcomeH2.innerText = '패배';
-    }
-
+    
     const timerTr = document.createElement('tr');
     const timerTd = document.createElement('td');
-    timerTd.innerText = "걸린 시간";
     const timerTd2 = document.createElement('td');
     timerTd2.id = 'TimerTd';
     min = Math.round(time/600);
@@ -738,51 +809,46 @@ function endPopUp(outcome) {
     timerTd2.innerHTML = `${min}:${sec}`;
     timerTr.appendChild(timerTd);
     timerTr.appendChild(timerTd2);
-
+    
     const sizeTr = document.createElement('tr');
     const sizeTd = document.createElement('td');
-    sizeTd.innerText = "맵 크기";
     const sizeTd2 = document.createElement('td');
     sizeTd2.id ='SizeTd';
     sizeTd2.innerHTML = `${fieldLen.x} × ${fieldLen.y}`;
     sizeTr.appendChild(sizeTd);
     sizeTr.appendChild(sizeTd2);
-
+    
     const mineTr = document.createElement('tr');
     const mineTd = document.createElement('td');
-    mineTd.innerText = "꽂은 깃발의 수";
     const mineTd2 = document.createElement('td');
     mineTd2.id ='MineTd';
     mineTd2.innerHTML = `${flagCount} / ${fieldLen.mine}`;
     mineTr.appendChild(mineTd);
     mineTr.appendChild(mineTd2);
-
+    
     const lifeTr = document.createElement('tr');
     const lifeTd = document.createElement('td');
-    lifeTd.innerText = "남은 생명";
     const lifeTd2 = document.createElement('td');
     lifeTd2.id ='LifeTd';
     lifeTd2.innerHTML = `${life} / ${settings.life.value}`;
     lifeTr.appendChild(lifeTd);
     lifeTr.appendChild(lifeTd2);
-
+    
     const statTable = document.createElement('table');
     statTable.id = 'StatTable';
     statTable.appendChild(timerTr);
     statTable.appendChild(sizeTr);
     statTable.appendChild(mineTr);
     statTable.appendChild(lifeTr);
-
+    
     const restartBtn = document.createElement('div');
     restartBtn.id = 'RestartBtn';
     restartBtn.className = 'Btn';
-    restartBtn.innerHTML = '재시작';
     restartBtn.addEventListener('click', restart);
     
     const mainBtn = document.createElement('div');
     mainBtn.id = 'MainBtn';
     mainBtn.className = 'Btn';
-    mainBtn.innerHTML = '메인 메뉴';
     mainBtn.addEventListener('click', main);
     
     const btnWrapper = document.createElement('div');
@@ -790,6 +856,32 @@ function endPopUp(outcome) {
     btnWrapper.appendChild(restartBtn);
     btnWrapper.appendChild(mainBtn);
     
+    if (settings.language.value === '한글') {
+        if (outcome === 'win') {
+            outcomeH2.innerText = '승리';
+        } else {
+            outcomeH2.innerText = '패배';
+        }
+        timerTd.innerText = "걸린 시간";
+        sizeTd.innerText = "맵 크기";
+        mineTd.innerText = "꽂은 깃발의 수";
+        lifeTd.innerText = "남은 생명";
+        restartBtn.innerHTML = '재시작';
+        mainBtn.innerHTML = '메인 메뉴';
+    } else {
+        if (outcome === 'win') {
+            outcomeH2.innerText = 'Win';
+        } else {
+            outcomeH2.innerText = 'Loss';
+        }
+        timerTd.innerText = "Spent Time";
+        sizeTd.innerText = "Map Size";
+        mineTd.innerText = "Flags Count";
+        lifeTd.innerText = "Left Life";
+        restartBtn.innerHTML = 'Restart';
+        mainBtn.innerHTML = 'Main Menu';
+    }
+
     PopUp.appendChild(outcomeH2);
     PopUp.appendChild(statTable);
     PopUp.appendChild(btnWrapper);
@@ -852,28 +944,52 @@ function openSettings() {
     const settingPopUp = makePopUp();
     settingPopUp.id = "SettingsPopUp";
     const title = document.createElement('h2');
-    title.innerText = "설정";
     settingPopUp.appendChild(title);
     const settingTable = document.createElement('table');
     settingTable.id = "SettingsTable";
+    let target;
+    if (settings.language.value === "kr") {
+        target = "kr";
+    } else {
+        target = "en";
+    }
     for (const key in settings) {
         const tr = document.createElement('tr');
         tr.id = key;
         const td1 = document.createElement('td');
-        td1.innerText = settings[key].name;
+        td1.innerText = settings[key].name[target];
         const tooltip = document.createElement('div');
         tooltip.className = 'Tooltip';
-        tooltip.innerText = settings[key].description;
+        tooltip.innerText = settings[key].description[target];
         td1.appendChild(tooltip);
         const td2 = document.createElement('td');
-        const input = document.createElement('input');
-        input.type = settings[key].type;
-        td2.appendChild(input);
-        if (input.type !== "checkbox") {
-            input.value = settings[key].value;
+        let input;
+        if (settings[key].type === "select") {
+            input = document.createElement('select');
+            settings[key].dataList[target].forEach(data => {
+                console.log(data);
+                const option = document.createElement('option');
+                if (data === "Korean" || data === "한글") {
+                    option.value = "kr";
+                } else {
+                    option.value = "en";
+                }
+                option.innerText = data;
+                if (settings[key].value === option.value) {
+                    option.selected = true;
+                }
+                input.appendChild(option);
+            });
         } else {
-            input.checked = settings[key].value;
+            input = document.createElement('input');
+            input.type = settings[key].type;
+            if (input.type !== "checkbox") {
+                input.value = settings[key].value;
+            } else {
+                input.checked = settings[key].value;
+            }
         }
+        td2.appendChild(input);
         input.addEventListener("change", changeSetting);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -882,7 +998,13 @@ function openSettings() {
     const restoreBtn = document.createElement('div');
     restoreBtn.id = "Restore";
     restoreBtn.className = 'Btn';
-    restoreBtn.innerText = "기본 설정으로 복구";
+    if (settings.language.value === "kr") {
+        title.innerText = "설정";
+        restoreBtn.innerText = "기본 설정으로 복구";
+    } else {
+        title.innerText = "Settings";
+        restoreBtn.innerText = "Restore Default Settings";
+    }
     restoreBtn.addEventListener("click", restoreSetting);
     const infoSpan = document.createElement('span');
     infoSpan.id = "InfoSpan";
@@ -903,7 +1025,11 @@ function changeSetting(e) {
         e.target.value = 1;
     }
     settings[key].value = value;
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
+    if (key === 'language') {
+        main();
+        openSettings();
+    }
 }
 
 function loadSetting() {
