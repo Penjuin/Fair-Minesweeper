@@ -1,0 +1,240 @@
+@font-face {
+    font-family: 'MICEGothic Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    font-family: 'MICEGothic Bold', Arial, Helvetica, sans-serif;
+    margin: 0%;
+    padding: 0%;
+    position: relative;
+    text-align: center;
+    height: 100vh;
+    background-color: #b4ceeb;
+}
+
+.Btn {
+    width: fit-content;
+    display: block;
+    cursor: pointer;
+}
+
+div#MainPage {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: -webkit-center;
+    position: relative;
+    font-size: 20px;
+}
+
+div#Cover {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: black;
+    opacity: 0.2;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#InputTable {
+    border-spacing: 1vmin;
+}
+
+.PopUp #StartBtn {
+    position: absolute;
+    right: 3vw;
+    bottom: 3vh;
+}
+
+#StatusPopUp {
+    background-color: #b4ceeb;
+    animation: fadeIn 2s;
+}
+
+#StatusPopUp span {
+    left: 1vw;
+}
+
+#BtnWrapper {
+    position: absolute;
+    display: flex;
+    bottom: 1vh;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#BtnWrapper #RestartBtn {
+    margin-left: 4vw;
+    margin-right: 4vw;
+    width: 6vw;
+}
+
+#BtnWrapper #MainBtn {
+    margin-left: 4vw;
+    width: 10vw;
+}
+
+.PopUp {
+    background-color: #b4ceeb;
+    z-index: 2;
+    position: fixed;
+    width: 60vw;
+    height: 60vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+#UpperBar {
+    display: flex;
+    justify-content: space-between;
+    height: 4vh;
+    font-size: 3vh;
+}
+
+#TableBody {
+    overflow: auto;
+    width: 100vw;
+    height: 96vh;
+}
+
+#FieldTable {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+#FieldTable tr, td{
+    margin: 0px;
+    padding: 0px;
+}
+
+#FieldTable tr {
+    height: 21px;
+}
+
+#FieldTable td {
+    width: 21px;
+    height: 21px;
+}
+
+#StatTable {
+    position: relative;
+    text-align: left;
+    border-spacing: 2vw 1vh;
+}
+
+#StatTable td {
+    margin-right: 5vw;
+}
+
+.MineButton {
+    padding: 0px;
+    width: 20px;
+    height: 20px;
+}
+
+.MineButton.even {
+    background-color: #a09ecf;
+}
+
+.MineButton.odd {
+    background-color: #B6B4EB;
+}
+
+.MineButton:hover {
+    background-color: #d8d7f4;
+}
+
+.Cell.even {
+    background-color: #9EB5CF;
+}
+
+.Cell.odd {
+    background-color: #b4ceeb;
+}
+
+.Cell:hover {
+    background-color: #d7e5f4;
+}
+
+span {
+    position: relative;
+    display: block;
+    width: fit-content;
+}
+
+.Tooltip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 3;
+    opacity: 0;
+    background-color: #9eb5cf;
+    border-radius: 1vmin;
+    width: max-content;
+    max-width: 50vw;
+    padding: 1vmin;
+    padding-top: 0.3vmin;
+    padding-bottom: 0.3vmin;
+}
+
+td:hover .Tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+#InfoSpan {
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s;
+    bottom: 0px;
+    right: 0px;
+}
+
+#InfoSpan:hover {
+    opacity: 1;
+}
+
+.cm {
+    visibility: hidden;
+}
+
+#SettingsTable {
+    position: absolute;
+    top: 8vh;
+    left: 1vw;
+}
+
+#Restore {
+    position: absolute;
+    left: 50%;
+    bottom: 0%;
+    transform: translate(-50%, 0%);
+}
+
+span#Close {
+    position: absolute;
+    top: 1vmin;
+    right: 1vmin;
+}
+
+#InputForm {
+    position: relative;
+    top: 4vh;
+}
