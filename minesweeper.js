@@ -1,12 +1,3 @@
-// To Do
-// field와 mines 비공개로 전환하기.  클래스 공부 해야함
-// 1. sound effect need to make a mp3 file
-// 5. hint function? autoProcessing(): too good for just hint
-// 9. reveil mine break function done
-// 10. settings almost done
-// 11. stats
-// 12. css
-
 const fieldLen = {
     "x": 10,
     "y": 10,
@@ -439,14 +430,16 @@ function handleClick(e) {
     if (e.target.classList.contains('MineButton')) {
         if (e.buttons === 0) {
             if (e.button === 0) {
-                reveilQueue = [];
-                const isMineClick = reveil(x, y);
-                if (!isMineClick) {
-                    reveilQueueProcess();
-                    const sound = new Audio('sounds/reveil.mp3');
-                    sound.play();
+                if (!cell.classList.contains('flag') && !cell.classList.contains('?')) {
+                    reveilQueue = [];
+                    const isMineClick = reveil(x, y);
+                    if (!isMineClick) {
+                        reveilQueueProcess();
+                        const sound = new Audio('sounds/reveil.mp3');
+                        sound.play();
+                    }
+                    checkEnd();
                 }
-                checkEnd();
             } else if (e.button === 2) {
                 flag(x, y);
                 checkEnd();
@@ -486,9 +479,6 @@ function reveil(x, y) {
     if (isTest) {
         targetStatus = 2;
         target = 1;
-        // autoProcessing 확인용
-        // cell.innerHTML = data;
-        // cell.classList.replace('MineButton', 'Cell'); 
     } else {
         targetStatus = 1;
         target = 0;
@@ -519,9 +509,6 @@ function reveil(x, y) {
 }
 
 function addToReveilQueue(x, y) {
-    // to do
-    // i can improve this mechanizm
-    // y 1~3 + y 2~4 => y 1~4
     if (reveilQueue.some(r => r[0] === x && r[1] === y)) {
         return;
     }
@@ -696,7 +683,6 @@ function near(x, y, callback) {
 function win() {
     end();
     const winPopUp = endPopUp('win');
-    // winPopUp.querySelector('#Close').remove();
     document.body.appendChild(winPopUp);
 }
 
@@ -714,7 +700,6 @@ function lose() {
     popupTimer = setTimeout(() => {
         document.removeEventListener('mouseup', skipReveil);
         const losePopUp = endPopUp('lose');
-        // losePopUp.querySelector('#Close').remove();
         document.body.appendChild(losePopUp);
     }, mines.length * 100);
 }
