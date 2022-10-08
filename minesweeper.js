@@ -507,7 +507,7 @@ function handleClick(e) {
     if (e.target.classList.contains('MineButton')) {
         if (e.buttons === 0) {
             if (e.button === 0) {
-                if (!cell.classList.contains('flag') && !cell.classList.contains('?')) {
+                if (!e.target.classList.contains('flag') && !e.target.classList.contains('?')) {
                     reveilQueue = [];
                     const isMineClick = reveil(x, y);
                     if (!isMineClick) {
