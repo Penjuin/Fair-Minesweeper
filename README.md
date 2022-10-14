@@ -1,5 +1,6 @@
 # 지뢰 찾기 Minesweeper
 찍지 않고 풀 수 있는 지뢰 찾기
+
 Minesweeper that can solved without luck
 
 
