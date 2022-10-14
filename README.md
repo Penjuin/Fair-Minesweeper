@@ -2,13 +2,25 @@
 찍지 않고 풀 수 있는 지뢰 찾기
 Minesweeper that can solved without luck
 
+
+
+
+
+
 **플레이 방법**
+
 
 1. 우측의 about에 있는 링크를 클릭한다.
 2. 난이도를 선택한다.
 3. 플레이한다.
 
+
+
+
+
+
 **조작법**
+
 
 미지의 칸에 좌클릭 = 칸을 드러낸다.
 
@@ -16,7 +28,13 @@ Minesweeper that can solved without luck
 
 숫자칸에 좌 + 우클릭 = 주변 깃발의 수와 숫자가 같은 지 체크한다.
 
+
+
+
+
+
 **이 게임에 대해**
+
 
  기본적으로 첫 클릭한 위치를 가운데로 3x3 크기는 지뢰가 없이 생성된다.
  
@@ -28,13 +46,25 @@ Minesweeper that can solved without luck
 
 이때는 퍼즐의 크기가 커도 생성 시간이 매우 적다.
 
+
+
+
+
+
 **How to play**
+
 
 1. Click the link in ABOUT section on the right side.
 2. Click the difficulty button or custom difficulty.
 3. Have fun.
 
+
+
+
+
+
 **Control**
+
 
 Left click on the veiled cells = Reveil the cell.
 
@@ -42,7 +72,13 @@ Right click on the veiled cells = Flag the cell.
 
 Left + Right click on the numbered cells = Check if the number of flags around cell is the same.
 
+
+
+
+
+
 **About**
+
 
  Basically, 3x3 sizes are created without landmines with the first clicked position in the middle.
  
